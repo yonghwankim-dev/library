@@ -1,0 +1,25 @@
+/* start main section */
+.main__search * {
+  padding: 5px 5px;
+}
+
+.main__listTable table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.main__listTable thead {
+  background-color: #f3f3f3;
+  color: #727272;
+}
+
+.main__listTable tbody {
+  text-align: center;
+}
+
+.main__listTable tr th {
+  padding: 10px 10px;
+  border: none;
+  height: 40px;
+}
+/* end main section */

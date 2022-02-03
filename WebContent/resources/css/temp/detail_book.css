@@ -1,0 +1,106 @@
+.container {
+  width: 70%;
+  margin: 0px auto;
+}
+
+.profile {
+  padding: 30px;
+  border: 1px solid #cccccc;
+}
+
+/* start profile__header */
+.profile .profile__header h3 {
+  font-family: NotoSansCJKkr, sans-serif;
+  font-size: 25px;
+  color: #003d54;
+  margin: 0px 0px 5px 0px;
+}
+
+.profile .profile__header p {
+  font-family: NotoSansCJKkr, sans-serif;
+  font-size: 20px;
+  color: #737373;
+  margin: 0;
+}
+
+/* end profile__header */
+
+/* start profile__content */
+.profile__content {
+  display: flex;
+}
+
+/* start profile__content */
+.profile__table th {
+  text-align: right;
+  color: #333;
+  background: none;
+}
+
+.profile__table td {
+  float:right;
+  color: #4d4d4d;
+}
+
+.profile__table th,
+.profile__table td {
+  vertical-align: top;
+  line-height: 2;
+}
+
+.profile__content__bgContainer {
+  margin-left: 50px;
+}
+/* end profile__content */
+
+/* start ownership section */
+.ownership__header {
+  background-color: #014099;
+  color: white;
+  font-weight: normal;
+  font-size: 20px;
+  font-family: NotoSansCJKkr, sans-serif;
+  padding: 0px 20px 0px 20px;
+}
+
+.ownership__content__table table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.ownership__content .ownership__content__table thead {
+  background-color: #f3f3f3;
+  color: #727272;
+}
+
+.ownership__content .ownership__content__table tbody {
+  text-align: center;
+}
+
+.ownership__content .ownership__content__table tr th {
+  padding: 10px 10px;
+  border: none;
+  height: 40px;
+}
+
+.ownership__content .ownership__content__table a{
+	background: #04aa6d;
+	color: white;
+}
+/* end ownership section*/
+
+/* end profile__content */
+
+/* start detailBtn */
+.detailBtn {
+  margin-top: 40px;
+  text-align: right;
+}
+.detailBtn a {
+  text-decoration: none;
+  color: black;
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+/* end detailBtn */

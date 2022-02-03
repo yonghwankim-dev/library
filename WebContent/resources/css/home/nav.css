@@ -1,0 +1,44 @@
+.nav{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	font-size : 0.5rem;
+}
+
+.nav_row table tbody tr td{
+	border: 1px solid var(--gray-input-color);
+}
+
+.nav_row table tbody tr td:first-child{
+	background: lightgray;
+}
+
+.nav_row select{
+	font-size : 0.5rem;
+	width:100%;
+}
+
+.srchTab{
+  display: flex;
+}
+
+.srchTab_item {
+  width: 150px;
+  height: 50px;
+  font-size: 20px;
+  text-align: center;
+  padding: 10px 20px;
+  background-color : white;
+  border : none;
+  color: #bfbfbf;
+}
+
+.active {
+  border-top: 1px solid #014099;
+  color: #014099 !important;
+}
+
+#detailSrh{
+	display: none;
+}

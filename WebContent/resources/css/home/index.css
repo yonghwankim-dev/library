@@ -1,0 +1,29 @@
+@import url("header.css");
+@import url("nav.css");
+@import url("main.css");
+
+:root{
+	--main-bg-color : #014099;
+	--gray-input-color : #f1f1f1;
+}
+
+.box{
+	padding: 7px 15px;
+	margin: 5px 0 22px 0;
+	display: inline-block;	
+}
+
+.inputBox{
+	border : 1px solid var(--gray-input-color);
+	background: white;
+	color : black;	
+}
+
+.submitBox{
+	border : 1px solid var(--gray-input-color);
+	background: var(--main-bg-color);
+	color : white;		
+}
+
+
+

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="ill_search.css">
+    <title>상호대차 신청조회/취소</title>
+</head>
+<body>
+    <div class="main">
+        <h1>상호대차 신청조회/취소</h1>
+        <form action="" method="post">
+            <div class="main__search">
+                <!-- 도서 정보 필터 -->
+                <select name="category" id="main__search__category">
+                    <option>서명</option>
+                    <option>제공기관</option>
+                </select>
+                <input class="main__search__input" type="text" placeholder="검색어">
+                <!-- 대출시작일 - 대출종료일 -->
+                <input class="main__search__input" type="text" placeholder="신청시작일">
+                <span>~</span>
+                <input class="main__search__input" type="text" placeholder="신청종료일">
+
+                <!-- 상태 -->
+                <select name="sorted" id="main__search__sorted">
+                    <option>상태</option>
+                    <option>도서준비</option>
+                    <option>도서발송</option>
+                    <option>도서 도착</option>
+                </select>
+                <!-- 정렬항목 -->
+                <select name="sorted" id="main__search__sorted">
+                    <option>정렬항목</option>
+                    <option>서명</option>
+                    <option>제공기관</option>
+                </select>
+                <!-- 정렬항목에 대한 정렬순서 -->
+                <select name="ordered" id="main__search__ordered">
+                    <option>정렬순서</option>
+                    <option>오름차순</option>
+                    <option>내림차순</option>
+                </select>
+                <!-- 한 페이지당 건수 출력 -->
+                <input type="submit" value="조회">
+            </div>
+        </form>
+
+        <div class="main__listInfo">
+            <p>총 2건, 1/1 페이지</p>
+        </div>
+
+        <form action="" method="post">
+            <div class="main__listTable">
+                <table>
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox"></th>
+                            <th>No.</th>
+                            <th>서명</th>
+                            <th>제공기관</th>
+                            <th>신청자(성명)</th>
+                            <th>신청일</th>
+                            <th>처리상태</th>
+                            <th>제공방법</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="checkbox"></td>        <!-- 체크박스 -->
+                            <td>1</td>                              <!-- No. -->
+                            <td>자바 프로그래밍/Barry Holmes</td>    <!-- 서명-->
+                            <td>충남대학교 중앙도서관</td>           <!-- 제공기관-->
+                            <td>김용환</td>                         <!-- 신청자(성명) -->
+                            <td>2021-06-15</td>                     <!-- 신청일 -->
+                            <td>도서준비</td>                       <!-- 처리상태 -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="main__cancel">
+                <input id="cancelBtn" type="submit" value="신청취소">
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+.main_row {
+  margin: 0px 20px;
+}
+
+.main_row:first-child {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.main_row .main_row_filterLibraryBtn {
+  font-size: 16px;
+}
+
+.main_row .main_row_filterLibrary {
+  padding: 5px 5px;
+}
+
+
+.bookList_conatiner {
+  margin-top: 30px;
+  padding: 40px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table > thead {
+  background: #014099;
+  color: white;
+}
+
+th,
+td {
+  border: 1px solid #dddddd;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+tbody > tr:hover {
+  background-color: #f5f5f5;
+}

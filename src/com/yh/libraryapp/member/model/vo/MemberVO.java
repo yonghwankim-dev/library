@@ -58,6 +58,13 @@ public class MemberVO {
 	public Date getMtl_loan_date() {
 		return mtl_loan_date;
 	}
+
+	@Override
+	public String toString() {
+		return "MemberVO [mem_num=" + mem_num + ", mem_name=" + mem_name + ", mem_email=" + mem_email + ", pwd=" + pwd
+				+ ", confirm_pwd=" + confirm_pwd + ", lib_regi_name=" + lib_regi_name + ", loan_num=" + loan_num
+				+ ", rsr_num=" + rsr_num + ", due_date=" + due_date + ", mtl_loan_date=" + mtl_loan_date + "]";
+	}
 	
 	
 }

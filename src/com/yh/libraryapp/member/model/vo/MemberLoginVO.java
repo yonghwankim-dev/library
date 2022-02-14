@@ -14,5 +14,12 @@ public class MemberLoginVO {
 	}
 	public String getPwd() {
 		return pwd;
-	}	
+	}
+
+	@Override
+	public String toString() {
+		return "MemberLoginVO [mem_email=" + mem_email + ", pwd=" + pwd + "]";
+	}
+	
+	
 }

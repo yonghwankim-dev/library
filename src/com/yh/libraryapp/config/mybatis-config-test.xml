@@ -22,6 +22,5 @@
 	
   <mappers>
     <mapper resource="com/yh/libraryapp/config/MemberMapper.xml"/>
-    
   </mappers>
 </configuration>

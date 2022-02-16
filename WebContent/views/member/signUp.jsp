@@ -34,9 +34,12 @@
                 <select id="registered_Library_Name" name="library_name">
                 	<c:forEach var="library" items="${librarys}" varStatus="status">
                 		<c:if test="${status.index==0}">
-                			<option selected>${library.lib_name}</option>
+                			<option value="${status.index+1}" selected>${library.lib_name}</option>
                 		</c:if>
-	                	<option>${library.lib_name}</option>
+                		<c:if test="${status.index!=0}">
+                			<option value="${status.index+1}">${library.lib_name}</option>
+                		</c:if>
+	        
                 	</c:forEach>
                     
                 </select>

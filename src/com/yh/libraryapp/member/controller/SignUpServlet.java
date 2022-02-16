@@ -1,6 +1,7 @@
 package com.yh.libraryapp.member.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -12,74 +13,96 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.junit.jupiter.api.BeforeAll;
+
 import com.yh.libraryapp.library.model.dao.LibraryDAO;
 import com.yh.libraryapp.library.model.vo.LibraryVO;
-import com.yh.libraryapp.member.model.dao.MemberDAO;
-import com.yh.libraryapp.member.model.vo.MemberSignUpVO;
+import com.yh.libraryapp.member.model.dao.MemberMapper;
+import com.yh.libraryapp.member.model.vo.MemberVO;
 
 @WebServlet("/home/signUp")
-public class SignUpServlet extends HttpServlet{
+public class SignUpServlet extends HttpServlet {
 
+	private static SqlSessionFactory sqlSessionFactory;
+	
+	public static void setup() throws IOException {
+		String resource = "com/yh/libraryapp/config/mybatis-config-test.xml";
+		InputStream inputStream = Resources.getResourceAsStream(resource);
+		sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+	}
+	
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		initLibrarys(request);
-			
+
 		HttpSession session = request.getSession();
-		if(session.getAttribute("signUpResult")!=null && 
-				!((Boolean) session.getAttribute("isFailSignUp")).booleanValue())
-		{
+		if (session.getAttribute("signUpResult") != null
+				&& !((Boolean) session.getAttribute("isFailSignUp")).booleanValue()) {
 			session.removeAttribute("signUpResult");
-		}
-		else
-		{
+		} else {
 			session.setAttribute("isFailSignUp", false);
 		}
-		
+
 		request.getRequestDispatcher("/views/member/signUp.jsp").forward(request, response);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		
+		setup();
 		initLibrarys(request);
+
+		HttpSession session = request.getSession();
 		
 		String mem_name = request.getParameter("name");
 		String mem_email = request.getParameter("email");
 		String mem_pwd = request.getParameter("password");
 		String mem_confirm_pwd = request.getParameter("confirm_password");
-		String lib_regi_name = request.getParameter("library_name");
-		
-		MemberSignUpVO member = new MemberSignUpVO(mem_name, mem_email, mem_pwd, mem_confirm_pwd, lib_regi_name);
-		HttpSession session = request.getSession();
-		
-		try {
-			if(mem_pwd.equals(mem_confirm_pwd))
-			{
-				int result = MemberDAO.signUp(member);
-				if(result==-1)
-				{
-					session.setAttribute("signUpResult", "이메일 중복되었습니다.");
-				}
-				else
-				{
-					response.sendRedirect("/Library/home");
-				}
-			}
-			else
-			{
-				session.setAttribute("signUpResult", "비밀번호가 중복되었습니다.");
-			}	
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
+		int lib_regi_num = Integer.parseInt(request.getParameter("library_name"));
+
+
+		// 비밀번호 불일치한 경우
+		if(!mem_pwd.equals(mem_confirm_pwd))
+		{
+			session.setAttribute("signUpResult", "비밀번호가 불일치합니다.");
 			session.setAttribute("isFailSignUp", true);
 			response.sendRedirect("/Library/home/signUp");
-		}	
+			return;
+		}
+		
+		MemberVO member = new MemberVO.Builder(-1)
+									.pwd(mem_pwd)
+									.mem_email(mem_email)
+									.mem_name(mem_name)
+									.lib_regi_num(lib_regi_num)
+									.build();
+
+		boolean result = false;		
+		try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+			MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
+			result = mapper.insert(member);
+			sqlSession.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		} finally {
+			if (result) {
+				response.sendRedirect("/Library/home");
+			} else {
+				session.setAttribute("signUpResult", "이메일이 중복되었습니다.");
+				session.setAttribute("isFailSignUp", true);
+				response.sendRedirect("/Library/home/signUp");
+			}
+		}
 	}
-	
-	private static void initLibrarys(HttpServletRequest request)
-	{
+
+	private static void initLibrarys(HttpServletRequest request) {
 		try {
 			List<LibraryVO> librarys = LibraryDAO.findAllLibraryNames();
 			request.setAttribute("librarys", librarys);

@@ -12,10 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.yh.libraryapp.member.model.dao.MemberDAO;
-import com.yh.libraryapp.member.model.vo.MemberLoginVO;
-import com.yh.libraryapp.member.model.vo.MemberLoginedVO;
-
 @WebServlet("/home/logout")
 public class LogoutServlet extends HttpServlet{
 

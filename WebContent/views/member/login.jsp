@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,6 +30,9 @@
                 <a href="/Library/home" class="cancelbtn">뒤로가기</a>
             </div>
         </form>
+		<c:if test="${not empty loginResult}">
+        	<script>alert("${loginResult}");</script>
+        </c:if>
     </div>
 </body>
 </html>

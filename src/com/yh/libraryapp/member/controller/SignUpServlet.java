@@ -3,6 +3,7 @@ package com.yh.libraryapp.member.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -19,7 +20,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.BeforeAll;
 
-import com.yh.libraryapp.library.model.dao.LibraryDAO;
+import com.yh.libraryapp.library.model.dao.LibraryMapper;
 import com.yh.libraryapp.library.model.vo.LibraryVO;
 import com.yh.libraryapp.member.model.dao.MemberMapper;
 import com.yh.libraryapp.member.model.vo.MemberVO;
@@ -38,6 +39,7 @@ public class SignUpServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		setup();
 		initLibrarys(request);
 
 		HttpSession session = request.getSession();
@@ -103,11 +105,15 @@ public class SignUpServlet extends HttpServlet {
 	}
 
 	private static void initLibrarys(HttpServletRequest request) {
-		try {
-			List<LibraryVO> librarys = LibraryDAO.findAllLibraryNames();
-			request.setAttribute("librarys", librarys);
-		} catch (SQLException e) {
+		LibraryMapper mapper = null;
+		List<LibraryVO> librarys = new ArrayList<LibraryVO>();
+		try(SqlSession sqlSession=sqlSessionFactory.openSession()){
+			mapper = sqlSession.getMapper(LibraryMapper.class);
+			librarys = mapper.findAllLibrary();
+		}catch(Exception e) {
 			e.printStackTrace();
+		}finally {
+			request.setAttribute("librarys", librarys);
 		}
 	}
 }

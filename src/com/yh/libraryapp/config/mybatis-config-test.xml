@@ -7,6 +7,7 @@
 	<typeAliases>
 		<typeAlias alias="MemberVO" type="com.yh.libraryapp.member.model.vo.MemberVO"/>
 		<typeAlias alias="LibraryVO" type="com.yh.libraryapp.library.model.vo.LibraryVO"/>
+		<typeAlias alias="BookVO" type="com.yh.libraryapp.book.model.vo.BookVO"/>
 	</typeAliases>
 
   <environments default="development">
@@ -24,5 +25,6 @@
   <mappers>
     <mapper resource="com/yh/libraryapp/member/model/dao/MemberMapper.xml"/>
     <mapper resource="com/yh/libraryapp/library/model/dao/LibraryMapper.xml"/>
+    <mapper resource="com/yh/libraryapp/book/model/dao/BookMapper.xml"/>
   </mappers>
 </configuration>

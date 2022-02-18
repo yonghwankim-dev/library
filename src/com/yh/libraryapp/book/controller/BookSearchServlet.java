@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.yh.libraryapp.book.model.dao.BookDAO;
-import com.yh.libraryapp.book.model.vo.BookListVO;
+import com.yh.libraryapp.book.model.vo.BookVO;
 
 @WebServlet("/search")
 public class BookSearchServlet extends HttpServlet{
@@ -19,7 +19,7 @@ public class BookSearchServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		List<BookListVO> books = null;
+		List<BookVO> books = null;
 		
 		String query = request.getParameter("content");
 	

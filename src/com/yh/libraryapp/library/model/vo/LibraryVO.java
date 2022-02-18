@@ -1,9 +1,15 @@
 package com.yh.libraryapp.library.model.vo;
 
+
+
 public class LibraryVO {
 	private int lib_regi_num;
 	private String lib_name;
-	
+		
+	public LibraryVO() {
+		
+	}
+
 	public LibraryVO(Builder builder) {
 		this.lib_regi_num = builder.lib_regi_num;
 		this.lib_name = builder.lib_name;

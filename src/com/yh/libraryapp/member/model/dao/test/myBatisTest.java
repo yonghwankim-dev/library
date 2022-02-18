@@ -39,6 +39,7 @@ class myBatisTest {
 	}
 	
 	@Test
+	@Disabled
 	public void gettingStartedWithoutXML(){	
 		String mem_email = "user1@gmail.com";
 		String pwd = "tmvlzj";
@@ -80,7 +81,6 @@ class myBatisTest {
 				System.out.println("회원가입 실패 : 중복된 메일이 존재합니다.");
 			}
 		}
-		
-		
 	}
+
 }

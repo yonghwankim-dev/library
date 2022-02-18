@@ -9,15 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import com.yh.libraryapp.book.model.vo.BookListVO;
+import com.yh.libraryapp.book.model.vo.BookVO;
 import com.yh.libraryapp.common.JDBCTemplate;
 
 public class BookDAO {
 	
 	
-	public static List<BookListVO> findAllBook() throws SQLException
+	public static List<BookVO> findAllBook() throws SQLException
 	{
-		List<BookListVO> books = new ArrayList<BookListVO>();
+		List<BookVO> books = new ArrayList<BookVO>();
 		
 		PreparedStatement pst = null;
 		Connection conn = null;
@@ -36,7 +36,7 @@ public class BookDAO {
 				String pub_com = rs.getString("pub_com");
 				int pub_year = rs.getInt("pub_year");
 				
-				BookListVO bookElement = new BookListVO(book_name, authors, pub_com, pub_year); 
+				BookVO bookElement = new BookVO(book_name, authors, pub_com, pub_year); 
 				books.add(bookElement);
 			}
 			
@@ -63,9 +63,9 @@ public class BookDAO {
 		return books;
 	}
 	
-	public static List<BookListVO> findFilteredBook(String lib_name) throws SQLException
+	public static List<BookVO> findFilteredBook(String lib_name) throws SQLException
 	{
-		List<BookListVO> books = new ArrayList<BookListVO>();
+		List<BookVO> books = new ArrayList<BookVO>();
 		
 		PreparedStatement pst = null;
 		Connection conn = null;
@@ -85,7 +85,7 @@ public class BookDAO {
 				String pub_com = rs.getString("pub_com");
 				int pub_year = rs.getInt("pub_year");
 				
-				BookListVO bookElement = new BookListVO(book_name, authors, pub_com, pub_year); 
+				BookVO bookElement = new BookVO(book_name, authors, pub_com, pub_year); 
 				books.add(bookElement);
 			}
 			
@@ -113,9 +113,9 @@ public class BookDAO {
 	}
 	
 	// ���� ���հ˻�
-	public static List<BookListVO> searchBook(String query) throws SQLException
+	public static List<BookVO> searchBook(String query) throws SQLException
 	{
-		List<BookListVO> books = new ArrayList<BookListVO>();
+		List<BookVO> books = new ArrayList<BookVO>();
 		
 		PreparedStatement pst = null;
 		Connection conn = null;
@@ -143,7 +143,7 @@ public class BookDAO {
 				String pub_com = rs.getString("pub_com");
 				int pub_year = rs.getInt("pub_year");
 				
-				BookListVO bookElement = new BookListVO(book_name, authors, pub_com, pub_year); 
+				BookVO bookElement = new BookVO(book_name, authors, pub_com, pub_year); 
 				books.add(bookElement);
 			}
 			

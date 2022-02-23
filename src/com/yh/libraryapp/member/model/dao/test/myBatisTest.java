@@ -12,8 +12,6 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-
-import com.yh.libraryapp.member.model.dao.MemberMapper;
 import com.yh.libraryapp.member.model.vo.MemberVO;
 
 class myBatisTest {
@@ -22,7 +20,7 @@ class myBatisTest {
 	
 	@BeforeAll
 	public static void setup() throws IOException {
-		String resource = "com/yh/libraryapp/config/mybatis-config-test.xml";
+		String resource = "com/yh/libraryapp/config/mybatis-config.xml";
 		InputStream inputStream = Resources.getResourceAsStream(resource);
 		sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 	}
@@ -40,21 +38,23 @@ class myBatisTest {
 	
 	@Test
 	@Disabled
-	public void gettingStartedWithoutXML(){	
+	public void loginTest(){	
 		String mem_email = "user1@gmail.com";
 		String pwd = "tmvlzj";
+		MemberVO m = new MemberVO.Builder(-1)
+								.mem_email(mem_email)
+								.pwd(pwd)
+								.build();
 		try(SqlSession session = sqlSessionFactory.openSession()){
-			MemberMapper mapper = session.getMapper(MemberMapper.class);
-			MemberVO member =  mapper.findByEmailAndPwd(mem_email,pwd);
+			MemberVO member =  session.selectOne("com.yh.libraryapp.member.model.dao.MemberMapper.findByEmailAndPwd",m);
 			System.out.println(member);
 		}
 	}
 	
 	@Test
-	@Disabled
 	public void signUpTest(){
-		String mem_pwd = "user4";
-		String mem_email = "user4@gmail.com";
+		String mem_pwd = "user15";
+		String mem_email = "user15@gmail.com";
 		String mem_name = "이신";
 		int lib_regi_num = 1;
 		MemberVO member = new MemberVO.Builder(-1)
@@ -64,10 +64,11 @@ class myBatisTest {
 										.lib_regi_num(lib_regi_num)
 										.build();
 		
+		int insertResult = 0;
 		boolean result = false;
-		try(SqlSession session = sqlSessionFactory.openSession()){			
-			MemberMapper mapper = session.getMapper(MemberMapper.class);
-			result = mapper.insert(member);
+		try(SqlSession session = sqlSessionFactory.openSession()){
+			insertResult = session.insert("com.yh.libraryapp.member.model.dao.MemberMapper.insert",member);
+			result = insertResult > 0 ? true : false;
 			//session.commit();
 		}catch (Exception e) {
 			result = false;

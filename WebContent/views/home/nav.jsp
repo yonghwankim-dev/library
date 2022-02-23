@@ -33,7 +33,7 @@
 							<td>도서관</td>
 							<td>
 								<select name="lib_name">
-									<option value="전체">전체</option>
+									<option value="전체" selected>전체</option>
 									<option value="충남대학교 도서관">충남대학교 도서관</option>
 									<option value="목원대학교 도서관">목원대학교 도서관</option>
 									<option value="우송대학교 도서관">우송대학교 도서관</option>
@@ -52,7 +52,7 @@
 						</tr>
 						<tr>
 							<td>출판사</td>
-							<td><input class="inputBox" type="text" name="pub_name"/></td>
+							<td><input class="inputBox" type="text" name="pub_com"/></td>
 						</tr>
 						<tr>
 							<td>발행년도</td>

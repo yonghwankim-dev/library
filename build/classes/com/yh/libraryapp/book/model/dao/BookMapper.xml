@@ -1,7 +1,52 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yh.libraryapp.book.model.dao.BookMapper">
+	<select id="findAllBook" resultType="BookVO">
+		select * from all_book_vw
+	</select>
 
+	<select id="findByLibName" parameterType="String" resultType="BookVO">
+		select * from filter_book_vw where lib_name=#{lib_name}
+	</select>
+
+	<select id="findByContent" parameterType="String" resultType="BookVO">
+		select * from all_book_vw
+		<where>
+			<if test="_parameter != null">
+				or book_name like '%' || #{content} || '%'
+				or authors like '%' || #{content} || '%'
+				or pub_com like '%' || #{content} || '%'
+				or pub_year like '%' || #{content} || '%'
+    		</if>
+		</where>
+	</select>
+
+	<select id="findByContents" parameterType="hashmap" resultType="BookVO">
+		select DISTINCT(book_name), authors, pub_com, pub_year from filter_book_vw
+		<where>
+			<if test="lib_name != null">
+				and lib_name like '%' || #{lib_name} || '%'
+			</if>
+			<if test="book_name != null">
+				and book_name like '%' || #{book_name} || '%'
+			</if>
+			<if test="author_name != null">
+				and authors like '%' || #{author_name} || '%'
+			</if>
+			<if test="pub_com != null">
+				and pub_com like '%' || #{pub_com} || '%'
+			</if>
+			<choose>
+				<when test="pub_year_start != null and pub_year_end != null">
+      				and pub_year between #{pub_year_start} and #{pub_year_end}
+    			</when>
+				<when test="pub_year_start != null and pub_year_end == null">
+					and pub_year between #{pub_year_start} and 2999
+    			</when>
+    			<when test="pub_year_start == null and pub_year_end != null">
+					and pub_year between 0000 and #{pub_year_end}
+    			</when>
+			</choose>
+		</where>
+	</select>
 </mapper>

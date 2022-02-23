@@ -17,8 +17,6 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-
-import com.yh.libraryapp.member.model.dao.MemberMapper;
 import com.yh.libraryapp.member.model.vo.MemberVO;
 
 @WebServlet("/home/login")
@@ -27,7 +25,7 @@ public class LoginServlet extends HttpServlet{
 	private static SqlSessionFactory sqlSessionFactory;
 	
 	public static void setup() throws IOException {
-		String resource = "com/yh/libraryapp/config/mybatis-config-test.xml";
+		String resource = "com/yh/libraryapp/config/mybatis-config.xml";
 		InputStream inputStream = Resources.getResourceAsStream(resource);
 		sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 	}
@@ -51,13 +49,16 @@ public class LoginServlet extends HttpServlet{
 		
 		String mem_email = request.getParameter("email");
 		String pwd = request.getParameter("password");
-		
 		HttpSession httpSession = request.getSession();
-		MemberVO member = null;
+		MemberVO member = new MemberVO.Builder(-1)
+										.mem_email(mem_email)
+										.pwd(pwd)
+										.build();
 		
-		try(SqlSession session = sqlSessionFactory.openSession()){
-			MemberMapper mapper = session.getMapper(MemberMapper.class);
-			member =  mapper.findByEmailAndPwd(mem_email, pwd);
+		
+		try(SqlSession sqlSession = sqlSessionFactory.openSession()){
+			
+			member =  sqlSession.selectOne("com.yh.libraryapp.member.model.dao.MemberMapper.findByEmailAndPwd",member);
 		}finally {
 			if(member!=null)
 			{
@@ -70,9 +71,6 @@ public class LoginServlet extends HttpServlet{
 				httpSession.setAttribute("isFailLogin", true);
 				response.sendRedirect("/Library/home/login");
 			}
-		}
-		
-		
-		
+		}		
 	}
 }

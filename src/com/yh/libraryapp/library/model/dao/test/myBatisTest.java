@@ -14,10 +14,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-
-import com.yh.libraryapp.library.model.dao.LibraryMapper;
 import com.yh.libraryapp.library.model.vo.LibraryVO;
-import com.yh.libraryapp.member.model.dao.MemberMapper;
 import com.yh.libraryapp.member.model.vo.MemberVO;
 
 class myBatisTest {
@@ -26,7 +23,7 @@ class myBatisTest {
 	
 	@BeforeAll
 	public static void setup() throws IOException {
-		String resource = "com/yh/libraryapp/config/mybatis-config-test.xml";
+		String resource = "com/yh/libraryapp/config/mybatis-config.xml";
 		InputStream inputStream = Resources.getResourceAsStream(resource);
 		sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 	}
@@ -35,8 +32,7 @@ class myBatisTest {
 	public void findAllLibraryTest(){	
 		
 		try(SqlSession session = sqlSessionFactory.openSession()){
-			LibraryMapper mapper = session.getMapper(LibraryMapper.class);
-			List<LibraryVO> librarys = mapper.findAllLibrary();
+			List<LibraryVO> librarys = session.selectList("com.yh.libraryapp.library.model.dao.LibraryMapper.findAllLibrary");
 			
 			System.out.println(librarys);
 		}

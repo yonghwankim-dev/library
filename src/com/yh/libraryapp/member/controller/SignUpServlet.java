@@ -20,9 +20,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.BeforeAll;
 
-import com.yh.libraryapp.library.model.dao.LibraryMapper;
 import com.yh.libraryapp.library.model.vo.LibraryVO;
-import com.yh.libraryapp.member.model.dao.MemberMapper;
 import com.yh.libraryapp.member.model.vo.MemberVO;
 
 @WebServlet("/home/signUp")
@@ -31,7 +29,7 @@ public class SignUpServlet extends HttpServlet {
 	private static SqlSessionFactory sqlSessionFactory;
 	
 	public static void setup() throws IOException {
-		String resource = "com/yh/libraryapp/config/mybatis-config-test.xml";
+		String resource = "com/yh/libraryapp/config/mybatis-config.xml";
 		InputStream inputStream = Resources.getResourceAsStream(resource);
 		sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 	}
@@ -87,8 +85,7 @@ public class SignUpServlet extends HttpServlet {
 
 		boolean result = false;		
 		try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-			MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
-			result = mapper.insert(member);
+			result = sqlSession.insert("com.yh.libraryapp.member.model.dao.MemberMapper.insert",member) > 0 ? true : false;
 			sqlSession.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -105,11 +102,10 @@ public class SignUpServlet extends HttpServlet {
 	}
 
 	private static void initLibrarys(HttpServletRequest request) {
-		LibraryMapper mapper = null;
-		List<LibraryVO> librarys = new ArrayList<LibraryVO>();
+		List<LibraryVO> librarys = null;
 		try(SqlSession sqlSession=sqlSessionFactory.openSession()){
-			mapper = sqlSession.getMapper(LibraryMapper.class);
-			librarys = mapper.findAllLibrary();
+			
+			librarys = sqlSession.selectList("com.yh.libraryapp.library.model.dao.LibraryMapper.findAllLibrary");
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {

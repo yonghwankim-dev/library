@@ -32,7 +32,11 @@
 				<c:forEach var="book" items="${books}" varStatus="status">
 					<tr>
 						<td>${status.index+1}</td>
-						<td><a>${book.book_name}</a></td>
+						<td>
+							<a href="/Library/book/detail?book_name=${book.book_name}">
+								${book.book_name}
+							</a>
+						</td>
 						<td>${book.authors}</td>
 						<td>${book.pub_com}</td>
 						<td>${book.pub_year}</td>

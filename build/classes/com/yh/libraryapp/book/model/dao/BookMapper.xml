@@ -4,11 +4,11 @@
 	<select id="findAllBook" resultType="BookVO">
 		select * from all_book_vw
 	</select>
-
+	
 	<select id="findByLibName" parameterType="String" resultType="BookVO">
 		select * from filter_book_vw where lib_name=#{lib_name}
 	</select>
-
+	
 	<select id="findByContent" parameterType="String" resultType="BookVO">
 		select * from all_book_vw
 		<where>
@@ -48,5 +48,9 @@
     			</when>
 			</choose>
 		</where>
+	</select>
+	
+	<select id="findByBookName" parameterType="String" resultType="DetailBookVO">
+		select * from detail_book_vw where book_name = #{book_name} and rownum=1
 	</select>
 </mapper>

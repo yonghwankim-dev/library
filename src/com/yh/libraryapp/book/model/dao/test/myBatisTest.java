@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.yh.libraryapp.book.model.vo.BookVO;
+import com.yh.libraryapp.book.model.vo.DetailBookVO;
 import com.yh.libraryapp.member.model.vo.MemberVO;
 
 class myBatisTest {
@@ -60,6 +61,7 @@ class myBatisTest {
 	}
 	
 	@Test
+	@Disabled
 	public void findByContentsTest() {
 		String lib_name="충남대학교 도서관";
 		String book_name = "자바";
@@ -82,5 +84,16 @@ class myBatisTest {
 			books.stream().forEach(item->System.out.println(item));
 		}
 	}
+	
+	@Test
+	public void findByBookNameTest() {
+		String book_name = "(Power) Java";
+		DetailBookVO book = null;
+		try(SqlSession sqlSession = sqlSessionFactory.openSession()){	
+			book = sqlSession.selectOne("com.yh.libraryapp.book.model.dao.BookMapper.findByBookName",book_name);
+			System.out.println(book);
+		}
+	}
+	
 
 }

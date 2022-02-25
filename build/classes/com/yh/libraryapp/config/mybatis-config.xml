@@ -8,6 +8,7 @@
 		<typeAlias alias="MemberVO" type="com.yh.libraryapp.member.model.vo.MemberVO"/>
 		<typeAlias alias="LibraryVO" type="com.yh.libraryapp.library.model.vo.LibraryVO"/>
 		<typeAlias alias="BookVO" type="com.yh.libraryapp.book.model.vo.BookVO"/>
+		<typeAlias alias="DetailBookVO" type="com.yh.libraryapp.book.model.vo.DetailBookVO"/>
 	</typeAliases>
 
   <environments default="development">

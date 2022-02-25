@@ -18,7 +18,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import com.yh.libraryapp.book.model.dao.BookDAO;
 import com.yh.libraryapp.book.model.vo.BookVO;
 
 @WebServlet("/home")

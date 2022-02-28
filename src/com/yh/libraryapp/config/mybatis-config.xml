@@ -8,8 +8,13 @@
 		<typeAlias alias="MemberVO" type="com.yh.libraryapp.member.model.vo.MemberVO"/>
 		<typeAlias alias="LibraryVO" type="com.yh.libraryapp.library.model.vo.LibraryVO"/>
 		<typeAlias alias="BookVO" type="com.yh.libraryapp.book.model.vo.BookVO"/>
-		<typeAlias alias="DetailBookVO" type="com.yh.libraryapp.book.model.vo.DetailBookVO"/>
+		<typeAlias alias="BookDetailVO" type="com.yh.libraryapp.book.model.vo.BookDetailVO"/>
+		<typeAlias alias="BookOwnVO" type="com.yh.libraryapp.book.model.vo.BookOwnVO"/>
 	</typeAliases>
+	
+	<typeHandlers>
+  		<typeHandler handler="com.yh.libraryapp.config.type_handler.LoanYNTypeHandler"/>
+	</typeHandlers>
 
   <environments default="development">
     <environment id="development">

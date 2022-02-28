@@ -50,7 +50,11 @@
 		</where>
 	</select>
 	
-	<select id="findByBookName" parameterType="String" resultType="DetailBookVO">
+	<select id="findByBookName" parameterType="String" resultType="BookDetailVO">
 		select * from detail_book_vw where book_name = #{book_name} and rownum=1
+	</select>
+	
+	<select id="findBookOwnInfoByBookName" parameterType="String" resultType="BookOwnVO">
+		select * from own_book_vw where book_name = #{book_name}
 	</select>
 </mapper>

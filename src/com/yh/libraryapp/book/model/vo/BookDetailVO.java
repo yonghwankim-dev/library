@@ -1,17 +1,17 @@
 package com.yh.libraryapp.book.model.vo;
 
-public class DetailBookVO {
+public class BookDetailVO {
 	private String book_name;
 	private String author_name;
 	private String pub_com;
 	private int pub_year;
 	private long isbn;
 
-	public DetailBookVO() {
+	public BookDetailVO() {
 		
 	}
 
-	public DetailBookVO(String book_name, String author_name, String pub_com, int pub_year, long isbn) {
+	public BookDetailVO(String book_name, String author_name, String pub_com, int pub_year, long isbn) {
 		this.book_name = book_name;
 		this.author_name = author_name;
 		this.pub_com = pub_com;

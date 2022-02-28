@@ -2,6 +2,7 @@ package com.yh.libraryapp.book.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +16,8 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import com.yh.libraryapp.book.model.vo.BookVO;
-import com.yh.libraryapp.book.model.vo.DetailBookVO;
+import com.yh.libraryapp.book.model.vo.BookDetailVO;
+import com.yh.libraryapp.book.model.vo.BookOwnVO;
 
 @WebServlet("/book/detail")
 public class BookDetailServlet extends HttpServlet{
@@ -33,12 +35,16 @@ public class BookDetailServlet extends HttpServlet{
 		
 		String book_name = request.getParameter("book_name");
 		
-		DetailBookVO book = null;
+		BookDetailVO book = null;
+		List<BookOwnVO> bookOwnInfos = null;
+		
 		try(SqlSession sqlSession = sqlSessionFactory.openSession()){	
 			book = sqlSession.selectOne("com.yh.libraryapp.book.model.dao.BookMapper.findByBookName",book_name);
+			bookOwnInfos = sqlSession.selectList("com.yh.libraryapp.book.model.dao.BookMapper.findBookOwnInfoByBookName",book_name);
 		}
 		
 		request.setAttribute("book", book);
+		request.setAttribute("bookOwnInfos", bookOwnInfos);
 		
 		request.getRequestDispatcher("/views/book/detail.jsp").forward(request, response);
 	}

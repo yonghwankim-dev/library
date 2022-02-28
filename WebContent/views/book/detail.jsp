@@ -72,64 +72,25 @@
 								<th>서비스</th>
 							</tr>
 						</thead>
-						<tbody>
-						<!-- 
-							<c:forEach var="book_owner" items="${bookOwner_list}"
+						<tbody> 
+							<c:forEach var="book" items="${bookOwnInfos}"
 								varStatus="status">
 								<tr>
 									<td>${status.index+1}</td>
-									<td>${book_owner.registered_number}</td>
-									<td>${book_owner.library_name}</td>
-									
+									<td>${book.book_regi_num}</td>
+									<td>${book.lib_name}</td>
+									<td>${book.loan_yn}</td>
 									<td>
-										 
-										<c:if test="${book_owner.loan_availability=='1'}">
-											<span>대출가능</span>
-										</c:if> 
-										
-										<c:if test="${book_owner.loan_availability=='0'}">
-											<span>대출중</span>
-										</c:if>
+										<!-- 반납에정일 -->
 									</td>
 									<td>
-										 
-										<c:if test="${book_owner.loan_availability=='0'}">
-											<span>${book_owner.return_scheduled_date}</span>
-										</c:if>
+										<!-- 예약 -->
 									</td>
 									<td>
-										<c:if test="${book_owner.loan_availability=='0' 
-														and not empty member
-														and book_owner.member_number ne member.member_number}">
-											<c:set var="flag" value="0"></c:set>
-											<c:forEach var="reservation_member_number" items="${book_owner.reservation_member_number_list}">
-												<c:if test="${reservation_member_number eq member.member_number}">
-													<c:set var="flag" value="1"></c:set>
-												</c:if>
-											</c:forEach>
-											<c:if test="${flag=='0'}">
-												<a href="/Library/book/reserve/request?registered_number=${book_owner.registered_number}">예약</a>
-											</c:if>
-										</c:if>
-										<c:if test="${book_owner.loan_availability=='0' and book_owner.reservation_count!=0}">
-											<span>${book_owner.reservation_count}명 예약중</span>
-										</c:if>
-									</td>
-									<td>
-										<c:if test="${book_owner.loan_availability=='1' and not empty member}">
-											<a href="/Library/book/loan/loan?registered_number=${book_owner.registered_number}">대출</a>
-											<a href="/Library/book/loan/loan?registered_number=${book_owner.registered_number}">상호대차</a>					
-										</c:if> 
-										
-										<c:if test="${book_owner.loan_availability=='0' 
-													and not empty member 
-													and book_owner.member_number eq member.member_number}">
-											<a href="/Library/book/returnBook/returnBook?registered_number=${book_owner.registered_number}">반납</a>
-										</c:if>
+										<!-- 서비스 -->
 									</td>
 								</tr>
 							</c:forEach>
-							 -->
 						</tbody>
 					</table>
 				</div>
@@ -138,7 +99,7 @@
 
 		<!-- 뒤로가기 버튼 -->
 		<div class="detailBtn">
-			<a href="/Library/index/index">뒤로가기</a>
+			<a href="/Library/home">뒤로가기</a>
 		</div>
 	</div>
 </body>

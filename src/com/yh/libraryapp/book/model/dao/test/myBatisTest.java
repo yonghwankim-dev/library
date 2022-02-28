@@ -17,7 +17,9 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.yh.libraryapp.book.model.vo.BookVO;
-import com.yh.libraryapp.book.model.vo.DetailBookVO;
+import com.yh.libraryapp.book.model.vo.type.LoanYNType;
+import com.yh.libraryapp.book.model.vo.BookDetailVO;
+import com.yh.libraryapp.book.model.vo.BookOwnVO;
 import com.yh.libraryapp.member.model.vo.MemberVO;
 
 class myBatisTest {
@@ -87,13 +89,36 @@ class myBatisTest {
 	
 	@Test
 	public void findByBookNameTest() {
-		String book_name = "(Power) Java";
-		DetailBookVO book = null;
+		//String book_name = "(Power) Java";
+		String book_name = "HTML + 자바스크립트:30일 완성";
+		BookDetailVO book = null;
 		try(SqlSession sqlSession = sqlSessionFactory.openSession()){	
 			book = sqlSession.selectOne("com.yh.libraryapp.book.model.dao.BookMapper.findByBookName",book_name);
 			System.out.println(book);
 		}
 	}
 	
+	@Test
+	@Disabled
+	public void findBookOwnInfoByBookName() {
+		List<BookOwnVO> bookOwnInfos = null;
+		String book_name = "(Power) Java";
+		try(SqlSession sqlSession = sqlSessionFactory.openSession()){	
+			bookOwnInfos = sqlSession.selectList("com.yh.libraryapp.book.model.dao.BookMapper.findBookOwnInfoByBookName",book_name);
+			System.out.println(bookOwnInfos);
+		}
+	}
+	
+	@Test
+	@Disabled
+	public void findBookOwnInfoByBookName2() {
+		List<BookOwnVO> bookOwnInfos = null;
+		String book_name = "HTML + 자바스크립트:30일 완성";
+		try(SqlSession sqlSession = sqlSessionFactory.openSession()){	
+			bookOwnInfos = sqlSession.selectList("com.yh.libraryapp.book.model.dao.BookMapper.findBookOwnInfoByBookName",book_name);
+			System.out.println(bookOwnInfos);
+		}
+	}
+
 
 }

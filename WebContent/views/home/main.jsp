@@ -33,7 +33,7 @@
 					<tr>
 						<td>${status.index+1}</td>
 						<td>
-							<a href="/Library/book/detail?book_name=${book.book_name}">
+							<a href="/Library/book/detail?book_name=${book.book_name}" class="book">
 								${book.book_name}
 							</a>
 						</td>
@@ -48,6 +48,19 @@
 		</table>
 	</div>
 </div>
-<script>
+<script type="text/javascript">
+	function replace(url){
+		url = url.replace(/&/g,"%26");
+		url = url.replace(/\+/g,"%2B");
+		return url;
+	}
+	const books = document.querySelectorAll(".book");
+	
+	books.forEach((item)=>{
+		item.href = replace(item.href);
+	});
+	console.log(books);
+	
+	
 	var library = '${param.library}';
 </script>

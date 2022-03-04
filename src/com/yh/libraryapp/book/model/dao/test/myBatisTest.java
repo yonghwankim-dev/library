@@ -2,8 +2,10 @@ package com.yh.libraryapp.book.model.dao.test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -88,6 +90,7 @@ class myBatisTest {
 	}
 	
 	@Test
+	@Disabled
 	public void findByBookNameTest() {
 		//String book_name = "(Power) Java";
 		String book_name = "HTML + 자바스크립트:30일 완성";
@@ -118,6 +121,16 @@ class myBatisTest {
 			bookOwnInfos = sqlSession.selectList("com.yh.libraryapp.book.model.dao.BookMapper.findBookOwnInfoByBookName",book_name);
 			System.out.println(bookOwnInfos);
 		}
+	}
+	
+	@Test
+	public void book_loan_dateTest() {
+		LocalDateTime dateTime = LocalDateTime.now();
+		Date book_loan_date = Date.valueOf(dateTime.toLocalDate());
+		Date book_rtn_expt_date = Date.valueOf(dateTime.plusDays(10).toLocalDate());
+		
+		System.out.println(book_loan_date);
+		System.out.println(book_rtn_expt_date);
 	}
 
 

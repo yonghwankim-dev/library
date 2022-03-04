@@ -57,4 +57,15 @@
 	<select id="findBookOwnInfoByBookName" parameterType="String" resultType="BookOwnVO">
 		select * from own_book_vw where book_name = #{book_name}
 	</select>
+	
+	<insert id="loan" parameterType="BookLoanVO">
+		insert into book_loan values(#{lib_regi_num},#{book_regi_num},#{book_loan_date},#{book_loan_extn_num},#{book_rtn_expt_date},
+									#{book_loan_num},#{mem_num})
+	</insert>
+	<update id="updateLoanYNAndRsrYN" parameterType="BookLoanVO">
+		update library_book set loan_yn='NO', rsr_yn='YES' where lib_regi_num = #{lib_regi_num} and book_regi_num = #{book_regi_num}
+	</update>
+	<update id="updateLoanNum" parameterType="BookLoanVO">
+		update member set loan_num=loan_num-1 where mem_num=#{mem_num}
+	</update>
 </mapper>

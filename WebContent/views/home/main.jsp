@@ -59,7 +59,6 @@
 	books.forEach((item)=>{
 		item.href = replace(item.href);
 	});
-	console.log(books);
 	
 	
 	var library = '${param.library}';

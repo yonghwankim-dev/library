@@ -15,6 +15,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import com.yh.libraryapp.library.model.vo.LibraryVO;
+import com.yh.libraryapp.library.model.vo.type.LibNameType;
 import com.yh.libraryapp.member.model.vo.MemberVO;
 
 class myBatisTest {
@@ -29,6 +30,7 @@ class myBatisTest {
 	}
 	
 	@Test
+	@Disabled
 	public void findAllLibraryTest(){	
 		
 		try(SqlSession session = sqlSessionFactory.openSession()){
@@ -36,5 +38,11 @@ class myBatisTest {
 			
 			System.out.println(librarys);
 		}
+	}
+	
+	@Test
+	public void LibNameTypeTest() {
+		int lib_regi_num = LibNameType.valueOf("충남대학교").getValue();
+		System.out.println(lib_regi_num);
 	}
 }

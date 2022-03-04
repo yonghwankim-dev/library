@@ -59,6 +59,8 @@
 			</div>
 			<!-- 소장정보 내용 -->
 			<div class="ownership__content">
+				<form action="/Library/book/loan" method="post">
+				<input type="text" name="book_name" value="${book.book_name}" hidden>
 				<div class="ownership__content__table">
 					<table>
 						<thead>
@@ -69,13 +71,13 @@
 								<th>도서상태</th>
 								<th>반납예정일</th>
 								<th>예약</th>
-								<th>서비스</th>
+								<th>대출</th>
 							</tr>
 						</thead>
 						<tbody> 
 							<c:forEach var="book" items="${bookOwnInfos}"
 								varStatus="status">
-								<tr>
+								<tr id="${status.index+1}">
 									<td>${status.index+1}</td>
 									<td>${book.book_regi_num}</td>
 									<td>${book.lib_name}</td>
@@ -88,19 +90,28 @@
 									</td>
 									<td>
 										<!-- 서비스 -->
+										<c:if test="${book.loan_yn eq '대출가능'}">
+											<input type="checkbox" name="loan" value="${book.book_regi_num} ${book.lib_name}"/>
+										</c:if>
 									</td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
 				</div>
-			</div>
-		</div>
-
-		<!-- 뒤로가기 버튼 -->
-		<div class="detailBtn">
-			<a href="/Library/home">뒤로가기</a>
-		</div>
+				
+				<div class="detailBtn">
+					<c:if test="${not empty member}">
+						<input type="submit" value="대출">
+					</c:if>
+					<a href="/Library/home">뒤로가기</a>
+				</div>
+				</form>
+			</div>	
+		</div>		
 	</div>
+	<c:if test="${not empty loanResult}">
+		<script>alert("${loanResult}");</script>
+	</c:if>
 </body>
 </html>

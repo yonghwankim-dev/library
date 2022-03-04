@@ -10,6 +10,7 @@
 		<typeAlias alias="BookVO" type="com.yh.libraryapp.book.model.vo.BookVO"/>
 		<typeAlias alias="BookDetailVO" type="com.yh.libraryapp.book.model.vo.BookDetailVO"/>
 		<typeAlias alias="BookOwnVO" type="com.yh.libraryapp.book.model.vo.BookOwnVO"/>
+		<typeAlias alias="BookLoanVO" type="com.yh.libraryapp.book.model.vo.BookLoanVO"/>
 	</typeAliases>
 	
 	<typeHandlers>

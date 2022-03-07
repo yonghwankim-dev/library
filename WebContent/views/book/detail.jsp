@@ -59,7 +59,7 @@
 			</div>
 			<!-- 소장정보 내용 -->
 			<div class="ownership__content">
-				<form action="/Library/book/loan" method="post">
+				<form action="/Library/book/service" method="post">
 				<input type="text" name="book_name" value="${book.book_name}" hidden>
 				<div class="ownership__content__table">
 					<table>
@@ -72,6 +72,7 @@
 								<th>반납예정일</th>
 								<th>예약</th>
 								<th>대출</th>
+								<th>반납</th>
 							</tr>
 						</thead>
 						<tbody> 
@@ -82,16 +83,20 @@
 									<td>${book.book_regi_num}</td>
 									<td>${book.lib_name}</td>
 									<td>${book.loan_yn}</td>
-									<td>
-										<!-- 반납에정일 -->
-									</td>
+									<td>${book.book_rtn_expt_date}</td>
 									<td>
 										<!-- 예약 -->
 									</td>
 									<td>
-										<!-- 서비스 -->
+										<!-- 대출 -->
 										<c:if test="${book.loan_yn eq '대출가능'}">
 											<input type="checkbox" name="loan" value="${book.book_regi_num} ${book.lib_name}"/>
+										</c:if>
+									</td>
+									<td>
+										<!-- 반납 -->
+										<c:if test="${book.loan_yn eq '대출중'}">
+											<input type="checkbox" name="rtn" value="${book.book_regi_num} ${book.lib_name} ${book.book_rtn_expt_date}"/>	
 										</c:if>
 									</td>
 								</tr>
@@ -102,7 +107,8 @@
 				
 				<div class="detailBtn">
 					<c:if test="${not empty member}">
-						<input type="submit" value="대출">
+						<input type="submit" name="service" value="대출">
+						<input type="submit" name="service" value="반납">
 					</c:if>
 					<a href="/Library/home">뒤로가기</a>
 				</div>
@@ -110,8 +116,5 @@
 			</div>	
 		</div>		
 	</div>
-	<c:if test="${not empty loanResult}">
-		<script>alert("${loanResult}");</script>
-	</c:if>
 </body>
 </html>

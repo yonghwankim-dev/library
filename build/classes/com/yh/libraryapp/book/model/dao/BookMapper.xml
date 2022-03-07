@@ -59,13 +59,26 @@
 	</select>
 	
 	<insert id="loan" parameterType="BookLoanVO">
-		insert into book_loan values(#{lib_regi_num},#{book_regi_num},#{book_loan_date},#{book_loan_extn_num},#{book_rtn_expt_date},
-									#{book_loan_num},#{mem_num})
+		insert into book_loan (book_loan_num, lib_regi_num, book_regi_num, mem_num, book_loan_date, book_loan_extn_num, book_rtn_expt_date) values(book_loan_num_seq.nextval, #{lib_regi_num}, #{book_regi_num}, #{mem_num}, #{book_loan_date}, #{book_loan_extn_num}, #{book_rtn_expt_date})
 	</insert>
-	<update id="updateLoanYNAndRsrYN" parameterType="BookLoanVO">
+	<insert id="rtn" parameterType="BookRtnVO">
+		insert into book_return (book_rtn_num, lib_regi_num, book_regi_num, mem_num, book_rtn_date, book_due_days) values(book_rtn_num_seq.nextval, #{lib_regi_num}, #{book_regi_num}, #{mem_num}, #{book_rtn_date}, #{book_due_days})
+	</insert>
+	<update id="updateLoanYNAndRsrYNWhenLoan" parameterType="BookLoanVO">
 		update library_book set loan_yn='NO', rsr_yn='YES' where lib_regi_num = #{lib_regi_num} and book_regi_num = #{book_regi_num}
 	</update>
-	<update id="updateLoanNum" parameterType="BookLoanVO">
+	<update id="updateLoanYNAndRsrYNWhenRtn" parameterType="BookRtnVO">
+		update library_book set loan_yn='YES', rsr_yn='NO' where lib_regi_num = #{lib_regi_num} and book_regi_num = #{book_regi_num}
+	</update>
+	<update id="decreaseLoanNum" parameterType="BookLoanVO">
 		update member set loan_num=loan_num-1 where mem_num=#{mem_num}
 	</update>
+	<update id="increaseLoanNum" parameterType="BookRtnVO">
+		update member set loan_num=loan_num+1 where mem_num=#{mem_num}
+	</update>
+	
+	<delete id="deleteBookLoan" parameterType="BookRtnVO">
+		delete from book_loan where lib_regi_num = #{lib_regi_num} and book_regi_num = #{book_regi_num}
+	</delete>
+	
 </mapper>

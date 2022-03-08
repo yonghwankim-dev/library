@@ -20,8 +20,10 @@ import org.junit.jupiter.api.Test;
 
 import com.yh.libraryapp.book.model.vo.BookVO;
 import com.yh.libraryapp.book.model.vo.type.LoanYNType;
+import com.yh.libraryapp.library.model.vo.type.LibNameType;
 import com.yh.libraryapp.book.model.vo.BookDetailVO;
 import com.yh.libraryapp.book.model.vo.BookOwnVO;
+import com.yh.libraryapp.book.model.vo.BookRsrVO;
 import com.yh.libraryapp.member.model.vo.MemberVO;
 
 class myBatisTest {
@@ -124,6 +126,7 @@ class myBatisTest {
 	}
 	
 	@Test
+	@Disabled
 	public void book_loan_dateTest() {
 		LocalDateTime dateTime = LocalDateTime.now();
 		Date book_loan_date = Date.valueOf(dateTime.toLocalDate());
@@ -131,6 +134,47 @@ class myBatisTest {
 		
 		System.out.println(book_loan_date);
 		System.out.println(book_rtn_expt_date);
+	}
+	
+	@Test
+	@Disabled
+	public void findBookRsrPrityNumByLibRegiNumAndBookRegiNumTest() {
+		BookRsrVO bookRsr = new BookRsrVO.Builder(-1)
+				 .lib_regi_num(1)
+				 .book_regi_num(5)
+				 .mem_num(22)
+				 .book_rsr_prity_num(1)
+				 .build();
+		
+		try(SqlSession sqlSession = sqlSessionFactory.openSession()){
+			Object result = sqlSession.selectOne("com.yh.libraryapp.book.model.dao.BookMapper.findBookRsrPrityNumByLibRegiNumAndBookRegiNum", bookRsr);
+			int book_rsr_prity_num = result!=null ? (int) result : 0;
+										
+			System.out.println(book_rsr_prity_num);
+		}
+	}
+	
+	@Test
+	public void bookRsrTest() {
+		boolean result = false;
+		BookRsrVO bookRsr = new BookRsrVO.Builder(-1)
+				 						 .lib_regi_num(1)
+										 .book_regi_num(5)
+										 .mem_num(25)
+										 .book_rsr_prity_num(1)
+										 .build();
+		
+		try(SqlSession sqlSession = sqlSessionFactory.openSession()){
+			result = sqlSession.insert("com.yh.libraryapp.book.model.dao.BookMapper.rsr",bookRsr) > 0 ? true : false;
+			result = sqlSession.update("com.yh.libraryapp.book.model.dao.BookMapper.decreaseRsrNum",bookRsr) > 0 ? true : false;
+			
+			//sqlSession.commit();
+		}catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		}finally {
+			
+		}
 	}
 
 

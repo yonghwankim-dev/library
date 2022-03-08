@@ -69,6 +69,7 @@
 								<th>등록번호</th>
 								<th>도서관명</th>
 								<th>도서상태</th>
+								<th>예약상태</th>
 								<th>반납예정일</th>
 								<th>예약</th>
 								<th>대출</th>
@@ -83,20 +84,28 @@
 									<td>${book.book_regi_num}</td>
 									<td>${book.lib_name}</td>
 									<td>${book.loan_yn}</td>
+									<td><!-- 예약상태 1명/예약가능 --></td>
 									<td>${book.book_rtn_expt_date}</td>
 									<td>
 										<!-- 예약 -->
+										<c:if test="${book.loan_yn eq '대출중' and not empty member}">
+											<c:if test="${book.mem_num != member.mem_num}">
+												<input type="checkbox" name="rsr" value="${book.book_regi_num} ${book.lib_name}"/>		
+											</c:if>
+										</c:if>
 									</td>
 									<td>
 										<!-- 대출 -->
-										<c:if test="${book.loan_yn eq '대출가능'}">
+										<c:if test="${book.loan_yn eq '대출가능' and not empty member}">
 											<input type="checkbox" name="loan" value="${book.book_regi_num} ${book.lib_name}"/>
 										</c:if>
 									</td>
 									<td>
 										<!-- 반납 -->
-										<c:if test="${book.loan_yn eq '대출중'}">
-											<input type="checkbox" name="rtn" value="${book.book_regi_num} ${book.lib_name} ${book.book_rtn_expt_date}"/>	
+										<c:if test="${book.loan_yn eq '대출중' and not empty member}">
+											<c:if test="${book.mem_num == member.mem_num}">
+												<input type="checkbox" name="rtn" value="${book.book_regi_num} ${book.lib_name} ${book.book_rtn_expt_date}"/>
+											</c:if>
 										</c:if>
 									</td>
 								</tr>
@@ -107,8 +116,9 @@
 				
 				<div class="detailBtn">
 					<c:if test="${not empty member}">
+						<input type="submit" name="service" value="예약">
 						<input type="submit" name="service" value="대출">
-						<input type="submit" name="service" value="반납">
+						<input type="submit" name="service" value="반납">					
 					</c:if>
 					<a href="/Library/home">뒤로가기</a>
 				</div>

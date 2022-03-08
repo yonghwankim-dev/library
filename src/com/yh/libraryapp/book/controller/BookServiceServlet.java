@@ -7,7 +7,9 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalField;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,6 +29,7 @@ import com.yh.libraryapp.member.model.vo.MemberVO;
 import com.yh.libraryapp.book.model.vo.BookDetailVO;
 import com.yh.libraryapp.book.model.vo.BookLoanVO;
 import com.yh.libraryapp.book.model.vo.BookOwnVO;
+import com.yh.libraryapp.book.model.vo.BookRsrVO;
 import com.yh.libraryapp.book.model.vo.BookRtnVO;
 
 @WebServlet("/book/service")
@@ -46,10 +49,11 @@ public class BookServiceServlet extends HttpServlet{
 		MemberVO member = (MemberVO) httpSession.getAttribute("member");
 		String book_name = request.getParameter("book_name");
 		String[] books = request.getParameterValues("loan");
+		boolean result = false;
 		
 		for(int i=0;i<books.length;i++)
 		{
-			boolean result = false;
+			result = false;
 			
 			int mem_num = member.getMem_num();
 			int book_regi_num = Integer.parseInt(books[i].split(" ")[0]);
@@ -137,6 +141,59 @@ public class BookServiceServlet extends HttpServlet{
 			}
 		}
 	}
+	
+	private void rsrBook(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		HttpSession httpSession = request.getSession();	
+		MemberVO member = (MemberVO) httpSession.getAttribute("member");
+		String book_name = request.getParameter("book_name");
+		String[] rsrs = request.getParameterValues("rsr");
+		boolean result = false;
+		
+		for(int i=0; i<rsrs.length; i++)
+		{
+			int mem_num = member.getMem_num();
+			int book_regi_num = Integer.parseInt(rsrs[i].split(" ")[0]);
+			int lib_regi_num = LibNameType.valueOf(rsrs[i].split(" ")[1]).getValue();
+			int book_rsr_prity_num = 1;
+			Map<String,Object> hashmap = new HashMap<String, Object>();
+			result = false;
+			
+			hashmap.put("lib_regi_num", lib_regi_num);
+			hashmap.put("book_regi_num", book_regi_num);
+			
+			try(SqlSession sqlSession = sqlSessionFactory.openSession()){
+				Object prity = sqlSession.selectOne("com.yh.libraryapp.book.model.dao.BookMapper.findBookRsrPrityNumByLibRegiNumAndBookRegiNum", hashmap);
+				book_rsr_prity_num = prity!=null ? (int) prity+1 : 1;
+			}
+			
+			BookRsrVO bookRsr = new BookRsrVO.Builder(-1)
+					 						 .lib_regi_num(lib_regi_num)
+											 .book_regi_num(book_regi_num)
+											 .mem_num(mem_num)
+											 .book_rsr_prity_num(book_rsr_prity_num)
+											 .build();
+			
+			try(SqlSession sqlSession = sqlSessionFactory.openSession()){
+				result = sqlSession.insert("com.yh.libraryapp.book.model.dao.BookMapper.rsr",bookRsr) > 0 ? true : false;
+				result = sqlSession.update("com.yh.libraryapp.book.model.dao.BookMapper.decreaseRsrNum",bookRsr) > 0 ? true : false;
+				
+				//sqlSession.commit();
+			}catch (Exception e) {
+				e.printStackTrace();
+				result = false;
+			}finally {
+				if(result)
+				{
+					responseResult("예약성공", book_name, response);
+				}
+				else
+				{
+					responseResult("예약실패", book_name, response);
+				}
+			}
+			
+		}
+	}
 		
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -152,6 +209,9 @@ public class BookServiceServlet extends HttpServlet{
 		else if(service.equals("반납"))
 		{
 			rtnBook(request, response);
+		}else if(service.equals("예약"))
+		{
+			rsrBook(request, response);
 		}
 		
 	}

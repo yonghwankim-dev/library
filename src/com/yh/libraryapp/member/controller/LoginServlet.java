@@ -57,7 +57,6 @@ public class LoginServlet extends HttpServlet{
 		
 		
 		try(SqlSession sqlSession = sqlSessionFactory.openSession()){
-			
 			member =  sqlSession.selectOne("com.yh.libraryapp.member.model.dao.MemberMapper.findByEmailAndPwd",member);
 		}finally {
 			if(member!=null)

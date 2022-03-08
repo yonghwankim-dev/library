@@ -58,23 +58,41 @@
 		select * from own_book_vw where book_name = #{book_name}
 	</select>
 	
+	<select id="findBookRsrPrityNumByLibRegiNumAndBookRegiNum" parameterType="hashmap" resultType="int">
+		select max(book_rsr_prity_num) from book_reservation where lib_regi_num = #{lib_regi_num} and book_regi_num = #{book_regi_num}
+	</select>
+	
+	
 	<insert id="loan" parameterType="BookLoanVO">
 		insert into book_loan (book_loan_num, lib_regi_num, book_regi_num, mem_num, book_loan_date, book_loan_extn_num, book_rtn_expt_date) values(book_loan_num_seq.nextval, #{lib_regi_num}, #{book_regi_num}, #{mem_num}, #{book_loan_date}, #{book_loan_extn_num}, #{book_rtn_expt_date})
 	</insert>
+	
 	<insert id="rtn" parameterType="BookRtnVO">
 		insert into book_return (book_rtn_num, lib_regi_num, book_regi_num, mem_num, book_rtn_date, book_due_days) values(book_rtn_num_seq.nextval, #{lib_regi_num}, #{book_regi_num}, #{mem_num}, #{book_rtn_date}, #{book_due_days})
 	</insert>
+	
+	<insert id="rsr" parameterType="BookRsrVO">
+		insert into book_reservation(book_rsr_num, lib_regi_num, book_regi_num, mem_num, book_rsr_prity_num) values(book_rsr_num_seq.nextval, #{lib_regi_num}, #{book_regi_num}, #{mem_num}, #{book_rsr_prity_num})
+	</insert>
+	
 	<update id="updateLoanYNAndRsrYNWhenLoan" parameterType="BookLoanVO">
 		update library_book set loan_yn='NO', rsr_yn='YES' where lib_regi_num = #{lib_regi_num} and book_regi_num = #{book_regi_num}
 	</update>
+	
 	<update id="updateLoanYNAndRsrYNWhenRtn" parameterType="BookRtnVO">
 		update library_book set loan_yn='YES', rsr_yn='NO' where lib_regi_num = #{lib_regi_num} and book_regi_num = #{book_regi_num}
 	</update>
+	
 	<update id="decreaseLoanNum" parameterType="BookLoanVO">
 		update member set loan_num=loan_num-1 where mem_num=#{mem_num}
 	</update>
+	
 	<update id="increaseLoanNum" parameterType="BookRtnVO">
 		update member set loan_num=loan_num+1 where mem_num=#{mem_num}
+	</update>
+	
+	<update id="decreaseRsrNum" parameterType="BookRsrVO">
+		update member set rsr_num=rsr_num-1 where mem_num=#{mem_num}
 	</update>
 	
 	<delete id="deleteBookLoan" parameterType="BookRtnVO">
